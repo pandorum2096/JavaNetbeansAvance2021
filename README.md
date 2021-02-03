@@ -26,10 +26,8 @@ reponse:
 Partie 3: Gestion d'une liste d'étudiants
 
 Ou se trouve le fichier etudiants.csv ?
-C:\\Users\\HP\\Dropbox\\Mon PC (DESKTOP-MAL4HBH)\\Documents\\GitHub\\JavaNetbeansAvance2021\\src\\etudiants.csv
+C:\Users\HP\AppData\Roaming\NetBeans\8.2rc\config\GF_4.1.1\domain1\config\etudiants.csv
 
 Savez-vous pourquoi?
 
-car on a indexé le lieu de creation du fichier
-String filepath = "C:\\Users\\HP\\Dropbox\\Mon PC (DESKTOP-MAL4HBH)\\Documents\\GitHub\\JavaNetbeansAvance2021\\src\\etudiants.csv";
-FileWriter fw = new FileWriter (filepath , false);
+car on a pas indexé le lieu de creation du fichier

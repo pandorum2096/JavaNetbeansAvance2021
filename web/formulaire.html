@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+            /* Général ------------------------------------------------------------------------------------- */
+
+body, p, legend, label, input {
+    font: normal 8pt verdana, helvetica, sans-serif;
+}
+
+fieldset {
+    padding: 10px;
+    border: 1px #0568CD solid;
+}
+
+legend {
+    font-weight: bold;
+    color: #0568CD;
+}
+
+/* Forms --------------------------------------------------------------------------------------- */
+
+form label {
+    float: left;
+    width: 200px;
+    margin: 3px 0px 0px 0px;
+}
+
+form input {
+    margin: 3px 3px 0px 0px;
+    border: 1px #999 solid;
+}
+
+form input.sansLabel {
+    margin-left: 200px;
+}
+
+form .requis {
+    color: #c00;
+}
+        </style>
+    </head>
+    <body>
+        <form method="post" action="etudiants">
+            <fieldset>
+                <legend>Inscription</legend>
+                <p>Vous pouvez vous inscrire via ce formulaire.</p>
+
+               
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" value="" size="20" maxlength="20" />
+                <br />
+                
+                <label for="prenom">Prenom <span class="requis">*</span></label>
+                <input type="text" id="email" name="prenom" value="" size="20" maxlength="60" />
+                <br />
+                
+                <label for="email">Adresse email <span class="requis">*</span></label>
+                <input type="text" id="email" name="email" value="" size="20" maxlength="60" />
+                <br />
+
+                <input type="submit" value="Inscription" class="sansLabel" />
+                <br />
+            </fieldset>
+        </form>
+    </body>
+</html>

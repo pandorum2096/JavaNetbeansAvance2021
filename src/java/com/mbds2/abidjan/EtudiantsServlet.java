@@ -6,10 +6,16 @@
 package com.mbds2.abidjan;
 
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,22 +48,46 @@ public class EtudiantsServlet extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            /* TODO output your page here. You may use following sample code.*/ 
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet EtudiantsServlet</title>");            
             out.println("</head>");
             out.println("<body style='text-align:center'>");
-            out.println("<FORM Method='POST' Action='etudiants'>");
-            //out.println("<FORM Method='POST' Action='doPost'>");
-            out.println("Nom : 		<INPUT type=text size=20 name=nom><BR>");
-            out.println("Prénom : 	<INPUT type=text size=20 name=prenom><BR>");
-            out.println("Email :        <INPUT type=text size=20 name=email><BR>");
-            out.println("<INPUT type=submit value=Envoyer>");
+            out.println("<table>");
+            out.println("<tr>");
+            out.println("<td>");
+            out.println("<FORM Method='GET' Action='formulaire.html'>");
+            out.println("<input type=\"submit\" value=\"Voir le formulaire inscription\" />");
             out.println("</FORM>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println("</tr>");
+            out.println("</table>");
+            out.println("<br/>");
+           
+            out.println("<table border='1px' >");
+            out.println("<tr style='border: 1px solid #333; background-color:blue;'>");
+            out.println("<th>Nom</th>");
+            out.println("<th>Prenom</th>");
+            out.println("<th>Email</th>");
+            out.println("</tr>");
+               try{
+        BufferedReader BR = new BufferedReader(new FileReader("etudiants.csv"));
+                String ligne;
+        while((ligne = BR.readLine()) != null){
+            String[] donne = ligne.split(",");
+            out.println("<tr style='border: 1px solid #333; background-color:yellow;'>");
+            out.println("<td>"+donne[0]+"</td>");
+            out.println("<td>"+donne[1]+"</td>");
+            out.println("<td>"+donne[2]+"</td>");
+            out.println("</tr>");
+        }
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+            out.println("</table>");
+            
+            
         }
     }
 
@@ -74,6 +104,8 @@ public class EtudiantsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+       
     }
 
     /**
@@ -88,15 +120,32 @@ public class EtudiantsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        // processRequest(request, response);
-        PrintWriter out = response.getWriter();
-        
-        //out.println(request.getParameter("nom"));
+       /* PrintWriter out = response.getWriter();        
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String email = request.getParameter("email");
-        
-         saveRecord(nom , prenom ,email,filepath);
-        out.println("reussite");
+        saveRecord(nom , prenom ,email,filepath);
+        out.println("insertion reussite!!");      
+        response.sendRedirect("http://localhost:8080/JavaNetbeansAvance2021/etudiants");*/
+       
+     String delimiteur=",";
+     String separateur="\n";
+     String nom= request.getParameter("nom");
+     String prenom = request.getParameter("prenom");
+     String email = request.getParameter("email");
+     FileWriter filewritter= new FileWriter("etudiants.csv",true);
+     
+     filewritter.append(nom);
+     filewritter.append(delimiteur);
+     filewritter.append(prenom);
+     filewritter.append(delimiteur);
+     filewritter.append(email);
+     filewritter.append(delimiteur);
+     filewritter.append(separateur);
+     filewritter.flush();
+     filewritter.close();
+     PrintWriter out = response.getWriter();
+      doGet(request,response); 
         
     }
 
@@ -111,28 +160,21 @@ public class EtudiantsServlet extends HttpServlet {
     }// </editor-fold>
     
      
-        String filepath = "C:\\Users\\HP\\Dropbox\\Mon PC (DESKTOP-MAL4HBH)\\Documents\\GitHub\\JavaNetbeansAvance2021\\src\\etudiants.csv";
-       
-        
+        String filepath = "etudiants.csv";              
         public static void saveRecord(String nom, String prenom, String email,String filepath)
         {
             try
            {
-             FileWriter fw = new FileWriter (filepath , false);
+             FileWriter fw = new FileWriter (filepath , true);
              BufferedWriter bw = new  BufferedWriter(fw);
              PrintWriter pw = new PrintWriter (bw);
 
-             pw.println(nom + ','+ prenom + ','+email);
+             pw.println(nom + prenom +email);
              pw.flush();
              pw.close();
-
-           
-
-           }
-          catch(Exception E)
+           }catch(IOException E)
           {
-              PrintWriter out = response.getWriter();
-             out.println("reussite");
+             
           }
         }
 
